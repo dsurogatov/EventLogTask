@@ -54,12 +54,6 @@ checkstyle {
 	configFile = new File(rootDir, "checkstyle.xml")
 }
 
-task bootRunDev {
-    bootRun { systemProperty "spring.profiles.active", "dev" }
+bootRun {
+    systemProperties = System.properties
 }
-bootRunDev.finalizedBy bootRun
-
-task bootRunProd {
-    bootRun { systemProperty "spring.profiles.active", "prod" }
-}
-bootRunProd.finalizedBy bootRun
