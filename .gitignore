@@ -104,4 +104,5 @@ gradle-app.setting
 # End of https://www.gitignore.io/api/java,gradle,node
 
 !eventlog-web/build
+eventlog/bin
 
