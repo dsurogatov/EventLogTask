@@ -1,0 +1,65 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.0.RC2'
+	}
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'checkstyle'
+
+
+group = 'org.dsu'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+
+dependencies {
+	//compile('org.springframework.boot:spring-boot-starter-activemq')
+	compile('org.springframework.boot:spring-boot-starter-aop')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	
+	runtime('com.h2database:h2')
+	//runtime('org.postgresql:postgresql')
+	
+	compile('org.apache.commons:commons-lang3')
+	compile('com.google.guava:guava:23.6-jre')
+	compileOnly('org.projectlombok:lombok')
+	
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.codehaus.groovy:groovy-all:2.4.10')
+	testCompile('org.spockframework:spock-core:1.1-groovy-2.4')
+	
+}
+
+checkstyle {
+	configFile = new File(rootDir, "checkstyle.xml")
+}
+
+task bootRunDev {
+    bootRun { systemProperty "spring.profiles.active", "dev" }
+}
+bootRunDev.finalizedBy bootRun
+
+task bootRunProd {
+    bootRun { systemProperty "spring.profiles.active", "prod" }
+}
+bootRunProd.finalizedBy bootRun
